@@ -48,7 +48,7 @@ function App() {
       <TargetCursor />
       
       {/* Background Container */}
-      <div className="fixed inset-0 h-full w-full bg-black pointer-events-none">
+      <div className="fixed inset-0 h-full w-full bg-black pointer-events-none z-0">
            <PrismaticBurst paused={!hasEntered} />
            {/* Overlay to ensure text contrast if background is too bright */}
            <div className="absolute inset-0 bg-black/40 pointer-events-none" /> 
@@ -56,7 +56,7 @@ function App() {
       
       {/* Main Content Container */}
       <div className={`relative w-full min-h-screen p-4 sm:p-8 flex flex-col items-center justify-center z-10 transition-opacity duration-1000 ${hasEntered ? 'opacity-100' : 'opacity-0'}`}>
-      <div className="w-full max-w-2xl flex flex-col gap-5">
+      <div className="w-full max-w-2xl flex flex-col gap-5 pb-24 sm:pb-0">
         
         {/* 1. Profile Card (Lanyard) */}
         <AnimatedContent distance={150} direction="vertical" reverse={false} initialOpacity={0} animateOpacity scale={0.9} threshold={0.2}>
@@ -140,7 +140,7 @@ function App() {
         <GlassCard className="p-6 w-full">
              <div className="flex flex-col gap-4">
                 <h3 className="text-sm uppercase tracking-wider text-indigo-400 font-semibold mb-2">Connect</h3>
-                <div className="flex flex-col gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {SOCIAL_LINKS.map(link => {
                         const Icon = (Icons as any)[link.icon] || Icons.Link;
                         const customColor = (link as any).color;
@@ -150,18 +150,15 @@ function App() {
                                 href={link.url} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="cursor-target group flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all hover:scale-[1.02] border border-transparent hover:border-white/10"
+                                className="cursor-target group flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all hover:scale-[1.02] border border-transparent hover:border-white/10 relative overflow-hidden"
                             >
-                                <div className="p-2 rounded-lg bg-black/20 text-white group-hover:text-white transition-colors" style={{ color: customColor }}>
-                                    <Icon className="h-6 w-6" />
+                                <div className="p-2 rounded-lg bg-black/20 text-white group-hover:text-white transition-colors relative z-10" style={{ color: customColor }}>
+                                    <Icon className="h-5 w-5" />
                                 </div>
-                                <div className="flex flex-col">
-                                    <span className="text-base font-bold text-neutral-200 group-hover:text-white transition-colors">{link.name}</span>
-                                    <span className="text-xs text-neutral-500 group-hover:text-neutral-400 truncate max-w-[200px] sm:max-w-sm opacity-60">{link.url.replace(/^https?:\/\/(www\.)?/, '')}</span>
+                                <div className="flex flex-col relative z-10">
+                                    <span className="text-sm font-bold text-neutral-200 group-hover:text-white transition-colors">{link.name}</span>
                                 </div>
-                                <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0">
-                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5 text-neutral-400"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                </div>
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none" />
                             </a>
                         )
                     })}

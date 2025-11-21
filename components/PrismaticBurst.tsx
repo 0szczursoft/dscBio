@@ -225,7 +225,7 @@ const PrismaticBurst: React.FC<PrismaticBurstProps> = ({
   rayCount,
   mixBlendMode = 'lighten'
 }) => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const programRef = useRef<any>(null);
   const rendererRef = useRef<any>(null);
   const mouseTargetRef = useRef([0.5, 0.5]);
@@ -328,7 +328,7 @@ const PrismaticBurst: React.FC<PrismaticBurstProps> = ({
       const y = (e.clientY - rect.top) / Math.max(rect.height, 1);
       mouseTargetRef.current = [Math.min(Math.max(x, 0), 1), Math.min(Math.max(y, 0), 1)];
     };
-    container.addEventListener('pointermove', onPointer);
+    (container as HTMLElement).addEventListener('pointermove', onPointer as any);
 
     let io: IntersectionObserver | null = null;
     if ('IntersectionObserver' in window) {
@@ -378,7 +378,7 @@ const PrismaticBurst: React.FC<PrismaticBurstProps> = ({
 
     return () => {
       cancelAnimationFrame(raf);
-      container.removeEventListener('pointermove', onPointer);
+      (container as HTMLElement).removeEventListener('pointermove', onPointer as any);
       ro?.disconnect();
       if (!ro) window.removeEventListener('resize', resize);
       io?.disconnect();
