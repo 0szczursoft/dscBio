@@ -1,0 +1,5 @@
+{
+  "name": "Discord Bio",
+  "description": "A sleek, dark-themed Discord bio website featuring real-time status updates via Lanyard and React Bits inspired UI components.",
+  "requestFramePermissions": []
+}
